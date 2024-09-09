@@ -50,4 +50,12 @@ xd file.txt
 
 ## Installation
 
-...
+```sh
+git clone --branch=release https://gitlab.com/mariusz-kowalski/xd.git $HOME/.local/share/xd
+```
+
+Add this line to your shell rc file: ($HOME/.zshrc $HOME/.bashrc)
+
+```sh
+source $HOME/.local/share/xd/xd.sh
+```
