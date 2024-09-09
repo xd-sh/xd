@@ -1,8 +1,18 @@
-# XD
+<!-- vscode-markdown-toc -->
+* 1. [Usage](#Usage)
+* 2. [Installation](#Installation)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc --># XD
+
+
 
 XD does many things and does them moderately well – yes, no, XD is not the 'Unix way.' However, it does what you probably wanted to do anyway, so why not...
 
-## Usage
+##  1. <a name='Usage'></a>Usage
 
 With XD life becomes easy...
 
@@ -48,7 +58,7 @@ xd archive.tag.gz new_dir
 xd file.txt
 ```
 
-## Installation
+##  2. <a name='Installation'></a>Installation
 
 ```sh
 git clone --branch=release https://gitlab.com/mariusz-kowalski/xd.git $HOME/.local/share/xd
