@@ -150,7 +150,6 @@ editor=${EDITOR:-vim}
 gzip_compressor=$( command_exists 'pigz' 'gzip' )
 bzip2_compressor=$( command_exists 'pbzip2' 'pbzip' )
 
-
 xd() {
   local XD_VERSION='1.0.0'
   local path1="$1"
