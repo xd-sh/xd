@@ -34,13 +34,13 @@ xd archive.tar.gz existing_dir
 
 ```sh
 # tar zxf archive.tar.gz
-zd archive.tag.gz
+xd archive.tag.gz
 ```
 
 ```sh
 # mkdir -p new_dir
 # tar zxf archive.tar.gz -C new_dir
-zd archive.tag.gz new_dir
+xd archive.tag.gz new_dir
 ```
 
 ```sh
