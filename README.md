@@ -61,6 +61,11 @@ xd archive.tag.gz new_dir
 xd file.txt
 ```
 
+```sh
+# sudo vim file.txt # if you do not own the file
+xd file.txt
+```
+
 ##  3. <a name='Installation'></a>Installation
 
 ```sh

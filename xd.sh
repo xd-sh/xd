@@ -44,6 +44,10 @@ is_compressed() {
   [[ "$1" =~ \.(gz|bz2|xz|zst|lzma|zip|7z|rar)$ ]]
 }
 
+is_own() {
+  [[ "$(stat -c "%u" "$1")" -eq "$(id -u)" ]]
+}
+
 dbg() {
   is_empty "$DEBUG_XD" && return 0
 
@@ -79,7 +83,7 @@ extension() {
 
 compress() {
   local extension=$(extension "$2")
-  
+
   if is_tar_path "$2"; then
     tar --use-compress-program=$(tar_compressor $extension) \
         --create \
@@ -103,7 +107,7 @@ compress() {
 ensure_dir_and_raport() {
   local dir="$1"
   local report="$2"
-  if is_not_empty "$dir"; then 
+  if is_not_empty "$dir"; then
     mkdir --parent "$dir"
     if is_not_empty "$report"; then
       printf "$report" "$dir"
@@ -117,7 +121,7 @@ decompress() {
 
   if is_tar_path "$in_file"; then
     local out_dir="${2:-$(trim_2_extentions "$in_file")}"
-    
+
     tar --use-compress-program=$(tar_compressor $extension) \
         --extract \
         --file "$in_file" \
@@ -151,7 +155,7 @@ gzip_compressor=$( command_exists 'pigz' 'gzip' )
 bzip2_compressor=$( command_exists 'pbzip2' 'pbzip' )
 
 xd() {
-  local XD_VERSION='1.0.0'
+  local XD_VERSION='1.1.0'
   local path1="$1"
   local path2="$2"
 
@@ -207,7 +211,11 @@ xd() {
       return $?
     fi
 
-    $editor "$path1"
+    if is_own "$path1"; then
+      $editor "$path1"
+    else
+      sudo $editor "$path1"
+    fi
     return $?
   fi
 

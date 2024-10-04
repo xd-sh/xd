@@ -35,7 +35,7 @@ dbgout() {
 
 assert_file() {
     if is_file "$1"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$1' to be a file" \
         'actual' "$(file "$1")" \
@@ -45,7 +45,7 @@ assert_file() {
 
 assert_dir() {
     if is_dir "$1"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$1' to be a file" \
         'actual' "$(file "$1")" \
@@ -55,7 +55,7 @@ assert_dir() {
 
 assert_gz_contain() {
     if zgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -64,7 +64,7 @@ assert_gz_contain() {
 
 assert_bz2_contain() {
     if bzgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -73,7 +73,7 @@ assert_bz2_contain() {
 
 assert_xz_contain() {
     if xzgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -82,7 +82,7 @@ assert_xz_contain() {
 
 assert_zst_contain() {
     if zstdgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -91,7 +91,7 @@ assert_zst_contain() {
 
 assert_lzma_contain() {
     if lzgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -100,7 +100,7 @@ assert_lzma_contain() {
 
 assert_zip_contain() {
     if zipgrep "$1" "$2"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -109,7 +109,7 @@ assert_zip_contain() {
 
 assert_7z_contain() {
     if 7z x -so "$2" | grep "$1"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -118,7 +118,7 @@ assert_7z_contain() {
 
 assert_rar_contain() {
     if unrar p "$2" | grep "$1"; then return 0; fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -132,10 +132,10 @@ assert_tar_contain() {
            --to-stdout \
            --use-compress-program=$(tar_compressor $extension) \
            --file "$2" | grep "$1"
-    then 
+    then
         return 0
     fi
-    
+
     batslib_print_kv_single_or_multi 8 \
         'expected' "'$2' to contain '$1'" \
         | batslib_decorate 'it did not contain it' \
@@ -147,7 +147,7 @@ assert_tar_contain() {
     source $PROJECT_ROOT/xd.sh
 
     DEBUG_XD="$DEBUG_XD" run xd existing_dir
-    
+
     assert_regex "$(dbgout)" "cd $PLAYGROUND/existing_dir"
 }
 
@@ -362,7 +362,7 @@ assert_tar_contain() {
     echo "This file is compressed with gz" \
         | gzip --stdout \
         > $PLAYGROUND/compressed_file.txt.gz
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.txt.gz
@@ -377,7 +377,7 @@ assert_tar_contain() {
     echo "This file is compressed with bz2" \
         | bzip2 --stdout \
         > $PLAYGROUND/compressed_file.txt.bz2
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.txt.bz2
@@ -392,7 +392,7 @@ assert_tar_contain() {
     echo "This file is compressed with xz" \
         | xz --stdout \
         > $PLAYGROUND/compressed_file.txt.xz
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.txt.xz
@@ -407,7 +407,7 @@ assert_tar_contain() {
     echo "This file is compressed with zst" \
         | zstd --stdout \
         > $PLAYGROUND/compressed_file.txt.zst
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.txt.zst
@@ -422,7 +422,7 @@ assert_tar_contain() {
     echo "This file is compressed with lzma" \
         | lzma --stdout \
         > $PLAYGROUND/compressed_file.txt.lzma
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.txt.lzma
@@ -438,7 +438,7 @@ assert_tar_contain() {
     echo "This file is compressed with zip" > "$to_be_compressed"
     zip -r "compressed_file.zip" "$to_be_compressed"
     rm "$to_be_compressed"
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.zip
@@ -454,7 +454,7 @@ assert_tar_contain() {
     echo "This file is compressed with 7z" > "$to_be_compressed"
     7z a "compressed_file.7z" "$to_be_compressed"
     rm "$to_be_compressed"
-    
+
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd compressed_file.7z
@@ -692,7 +692,7 @@ assert_tar_contain() {
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd -v
 
-    assert_output 'XD version: 1.0.0'
+    assert_output 'XD version: 1.1.0'
 }
 
 @test 'print version on --version parameter' {
@@ -700,5 +700,5 @@ assert_tar_contain() {
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd --version
 
-    assert_output 'XD version: 1.0.0'
+    assert_output 'XD version: 1.1.0'
 }
