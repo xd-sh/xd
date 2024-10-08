@@ -155,7 +155,7 @@ assert_tar_contain() {
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd
-    assert_line --partial 'existing_dir'
+    assert_line --partial 'existing_dir/'
     assert_line --partial 'existing_file.txt'
 }
 
@@ -692,7 +692,7 @@ assert_tar_contain() {
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd -v
 
-    assert_output 'XD version: 1.1.0'
+    assert_output --partial 'XD version:'
 }
 
 @test 'print version on --version parameter' {
@@ -700,5 +700,5 @@ assert_tar_contain() {
     source $PROJECT_ROOT/xd.sh
     DEBUG_XD="$DEBUG_XD" run xd --version
 
-    assert_output 'XD version: 1.1.0'
+    assert_output --partial 'XD version:'
 }

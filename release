@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e # exit on error
+set -o pipefail # exit on error in pipeline
+
+git_is_clean() {
+	git diff --quiet && git diff --cached --quiet
+}
+
+git_is_not_clean() {
+	! git_is_clean
+}
+
+error() {
+  echo "$@" >&2
+}
+
+if git_is_not_clean; then
+	error git is not clean
+	exit 1
+fi

@@ -153,9 +153,10 @@ fi
 editor=${EDITOR:-vim}
 gzip_compressor=$( command_exists 'pigz' 'gzip' )
 bzip2_compressor=$( command_exists 'pbzip2' 'pbzip' )
+root_dir="$(dirname "${BASH_SOURCE[0]}")"
 
 xd() {
-  local XD_VERSION='1.1.0'
+  local XD_VERSION=$(cat $root_dir/VERSION)
   local path1="$1"
   local path2="$2"
 
@@ -165,7 +166,7 @@ xd() {
   fi
 
   if is_empty "$path1"; then
-    ls -l --human-readable --all
+    ls -lF --human-readable --all --group-directories-first
     return $?
   fi
 
