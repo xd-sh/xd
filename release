@@ -5,6 +5,13 @@ set -o pipefail # exit on error in pipeline
 
 source ruby.sh
 
+new_version=$1
+patch_version="version-$new_version"
+minor_version="version-$(trim_1_extention $new_version)"
+major_version="version-$(trim_2_extentions $new_version)"
+version_path="$(root_dir)/VERSION"
+master="master"
+
 git_is_clean() {
 	git diff --quiet && git diff --cached --quiet
 }
@@ -14,7 +21,7 @@ git_is_not_clean() {
 }
 
 git_is_on_master() {
-	[[ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]]
+	[[ "$(git rev-parse --abbrev-ref HEAD)" == "$master" ]]
 }
 
 # if git_is_not_clean; then
@@ -22,20 +29,32 @@ git_is_on_master() {
 # 	exit 1
 # fi
 
-new_version=$1
-version_path="$(root_dir)/VERSION"
+
 
 if is_empty $new_version; then
 	error Give me a new version value!
 	exit  2
 fi
 
-echo "current version: $version_path"
+echo "current version: $(cat $version_path)"
 echo "    new version: $new_version"
 
 echo "Ctrl+C to exit / Enter continue"
 read
 
-echo $new_version > $version_path
-git add $version_path
-git commit --message="release version $new_version"
+# echo $new_version > $version_path
+# git add $version_path
+# git commit --message="release version $new_version"
+git tag $patch_version
+git push origin $master
+git push origin --tags
+
+git fetch origin
+
+for branch in "release" "$patch_version" "$major_version" "$minor_version"; do
+	echo teguję branch $branch
+	git checkout "$branch"
+	git merge "$master"
+	git push origin "$branch"
+done
+
