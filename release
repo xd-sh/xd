@@ -19,3 +19,15 @@ if git_is_not_clean; then
 	error git is not clean
 	exit 1
 fi
+
+root_dir="$(dirname "${BASH_SOURCE[0]}")"
+
+new_version=$1
+
+echo "current version: $(cat $root_dir/VERSION)"
+echo "    new version: $new_version"
+
+echo "Ctrl+C to exit"
+read
+
+echo aaaaa
