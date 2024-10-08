@@ -3,6 +3,8 @@
 set -e # exit on error
 set -o pipefail # exit on error in pipeline
 
+source ruby.sh
+
 git_is_clean() {
 	git diff --quiet && git diff --cached --quiet
 }
@@ -11,23 +13,29 @@ git_is_not_clean() {
 	! git_is_clean
 }
 
-error() {
-  echo "$@" >&2
+git_is_on_master() {
+	[[ "$(git rev-parse --abbrev-ref HEAD)" == "master" ]]
 }
 
-if git_is_not_clean; then
-	error git is not clean
-	exit 1
-fi
-
-root_dir="$(dirname "${BASH_SOURCE[0]}")"
+# if git_is_not_clean; then
+# 	error git is not clean
+# 	exit 1
+# fi
 
 new_version=$1
+version_path="$(root_dir)/VERSION"
 
-echo "current version: $(cat $root_dir/VERSION)"
+if is_empty $new_version; then
+	error Give me a new version value!
+	exit  2
+fi
+
+echo "current version: $version_path"
 echo "    new version: $new_version"
 
-echo "Ctrl+C to exit"
+echo "Ctrl+C to exit / Enter continue"
 read
 
-echo aaaaa
+echo $new_version > $version_path
+git add $version_path
+git commit --message="release version $new_version"

@@ -1,63 +1,5 @@
 
-# verbailzer
-is_empty() {
-  [[ -z "$1" ]]
-}
-
-is_not_empty() {
-  [[ -n "$1" ]]
-}
-
-does_exist() {
-  [[ -e "$1" ]]
-}
-
-does_not_exist() {
-  is_not_empty "$1" && ! does_exist "$1"
-}
-
-is_dir() {
-  [[ -d "$1" ]]
-}
-
-is_file() {
-  [[ -f "$1" ]]
-}
-
-is_not_file() {
-  ! is_file "$1"
-}
-
-is_not_ok() {
-  [[ $? -ne 0 ]]
-}
-
-command_exists() {
-  basename $(command -v "$1" || echo "$2")
-}
-
-is_tar_path() {
-  [[ "$1" == *.tar.* ]]
-}
-
-is_compressed() {
-  [[ "$1" =~ \.(gz|bz2|xz|zst|lzma|zip|7z|rar)$ ]]
-}
-
-is_own() {
-  [[ "$(stat -c "%u" "$1")" -eq "$(id -u)" ]]
-}
-
-dbg() {
-  is_empty "$DEBUG_XD" && return 0
-
-  echo "$@" >> "$DEBUG_XD"
-}
-
-error() {
-  dbg "$@"
-  echo "$@" >&2
-}
+source ruby.sh
 
 tar_compressor() {
   case "$1" in
@@ -67,18 +9,6 @@ tar_compressor() {
     zst)  echo "zstd";;
     lzma) echo "lzma";;
   esac
-}
-
-trim_1_extention() {
-  echo "${1%.*}"
-}
-
-trim_2_extentions() {
-  echo "${1%.*.*}"
-}
-
-extension() {
-  echo "${1##*.}"
 }
 
 compress() {
@@ -153,10 +83,9 @@ fi
 editor=${EDITOR:-vim}
 gzip_compressor=$( command_exists 'pigz' 'gzip' )
 bzip2_compressor=$( command_exists 'pbzip2' 'pbzip' )
-root_dir="$(dirname "${BASH_SOURCE[0]}")"
 
 xd() {
-  local XD_VERSION=$(cat $root_dir/VERSION)
+  local XD_VERSION=$(cat $(root_dir)/VERSION)
   local path1="$1"
   local path2="$2"
 
