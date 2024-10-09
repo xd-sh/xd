@@ -1,5 +1,5 @@
 
-source ruby.sh
+source "$(dirname "${BASH_SOURCE[0]}")/ruby.sh"
 
 tar_compressor() {
   case "$1" in
@@ -83,9 +83,9 @@ fi
 editor=${EDITOR:-vim}
 gzip_compressor=$( command_exists 'pigz' 'gzip' )
 bzip2_compressor=$( command_exists 'pbzip2' 'pbzip' )
+XD_VERSION=$(cat $(root_dir)/VERSION)
 
 xd() {
-  local XD_VERSION=$(cat $(root_dir)/VERSION)
   local path1="$1"
   local path2="$2"
 
