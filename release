@@ -3,13 +3,15 @@
 set -e # exit on error
 set -o pipefail # exit on error in pipeline
 
-source ruby.sh
+SCRIPT_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+source "$SCRIPT_DIR/ruby.sh"
 
 new_version=$1
 patch_version="version-$new_version"
 minor_version="version-$(trim_1_extention $new_version)"
 major_version="version-$(trim_2_extentions $new_version)"
-version_path="$(root_dir)/VERSION"
+version_path="$SCRIPT_DIR/VERSION"
 master="master"
 
 git_is_clean() {

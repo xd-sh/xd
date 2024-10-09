@@ -70,7 +70,3 @@ trim_2_extentions() {
 extension() {
   echo "${1##*.}"
 }
-
-root_dir() {
-  echo "$(dirname "${BASH_SOURCE[0]}")"
-}
