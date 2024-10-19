@@ -10,6 +10,7 @@ PROJECT_ROOT="$(pwd)"
 setup() {
     EXEC_ROOT="$(dirname "${BASH_SOURCE[0]}")"
     PLAYGROUND="$EXEC_ROOT/playground"
+    echo PLAYGROUND: $PLAYGROUND
     RAND_VAL=$(shuf -i 10000000-99999999 -n 1)
 
     rm -rf $PLAYGROUND
@@ -341,21 +342,21 @@ assert_tar_contain() {
 @test 'copy file' {
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
-    DEBUG_XD="$DEBUG_XD" run xd existing_file.txt new_file.txt
+    DEBUG_XD="$DEBUG_XD" run xd existing_file.txt initialy_absent_dir/new_file.txt
 
     assert_file "existing_file.txt"
-    assert_file "new_file.txt"
-    assert_equal "$(cat existing_file.txt)" "$(cat new_file.txt)"
+    assert_file "initialy_absent_dir/new_file.txt"
+    assert_equal "$(cat existing_file.txt)" "$(cat initialy_absent_dir/new_file.txt)"
 }
 
 @test 'copy dir' {
     DEBUG_XD=$(mktemp)
     source $PROJECT_ROOT/xd.sh
-    DEBUG_XD="$DEBUG_XD" run xd existing_dir new_dir
+    DEBUG_XD="$DEBUG_XD" run xd existing_dir initialy_absent_dir/new_dir
 
     assert_dir "existing_dir"
-    assert_dir "new_dir"
-    assert_equal "$(ls existing_dir)" "$(ls new_dir)"
+    assert_dir "initialy_absent_dir/new_dir"
+    assert_equal "$(ls existing_dir)" "$(ls initialy_absent_dir/new_dir)"
 }
 
 @test 'decompres a gz file' {

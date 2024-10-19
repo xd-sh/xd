@@ -128,6 +128,7 @@ xd() {
       return $?
     fi
 
+    mkdir --parents "$(dirname "$path2")"
     cp --archive "$path1" "$path2"
     return $?
   fi
