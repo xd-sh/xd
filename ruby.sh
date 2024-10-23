@@ -1,5 +1,13 @@
 # Ruby.sh - Make Bash more Rubysh
 
+are_the_same() {
+  [[ "$1" == "$2" ]]
+}
+
+are_equal() {
+  [[ "$1" -eq "$2" ]]
+}
+
 is_empty() {
   [[ -z "$1" ]]
 }
@@ -41,6 +49,10 @@ is_tar_path() {
 }
 
 is_compressed() {
+  [[ "$1" =~ \.(gz|bz2|xz|zst|lzma|zip|7z|rar)$ ]]
+}
+
+is_archive_path() {
   [[ "$1" =~ \.(gz|bz2|xz|zst|lzma|zip|7z|rar)$ ]]
 }
 
