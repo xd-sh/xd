@@ -69,7 +69,7 @@ xd file.txt
 ##  3. <a name='Installation'></a>Installation
 
 ```sh
-git clone --branch=release https://gitlab.com/mariusz-kowalski/xd.git $HOME/.local/share/xd
+git clone --branch=release https://github.com/xd-sh/xd.git $HOME/.local/share/xd
 ```
 
 Add this line to your shell rc file: ($HOME/.zshrc $HOME/.bashrc)
