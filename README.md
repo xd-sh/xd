@@ -82,3 +82,7 @@ for f in "$HOME/.zshrc" "$HOME/.bashrc"; do
     fi
 done
 ```
+
+## Committing
+
+Always write git commit messages in English using the Conventional Commits style.

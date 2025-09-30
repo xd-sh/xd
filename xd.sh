@@ -1,6 +1,6 @@
 
 SCRIPT_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
-SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" > /dev/null 2>&1 && pwd | tail --lines 1)"
 source "$SCRIPT_DIR/ruby.sh"
 
 tar_compressor() {
