@@ -75,5 +75,10 @@ git clone --branch=release https://github.com/xd-sh/xd.git $HOME/.local/share/xd
 Add this line to your shell rc file: ($HOME/.zshrc $HOME/.bashrc)
 
 ```sh
-source $HOME/.local/share/xd/xd.sh
+for f in "$HOME/.zshrc" "$HOME/.bashrc"; do
+    str='source $HOME/.local/share/xd/xd.sh'
+    if [ -f "$f" ]; then
+        grep -qxF "$str" "$f" || echo "$str" >> "$f"
+    fi
+done
 ```
